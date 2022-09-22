@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, DoCheck, OnInit } from '@angular/core';
 import { TaskList } from '../../model/task-list';
 
 @Component({
@@ -30,6 +30,14 @@ export class TodoListComponent implements OnInit {
 
   addItemTaskList(event: string) {
     this.taskList.push({ task: event, checked: false });
+    localStorage.setItem('lista', JSON.stringify(this.taskList));
+  }
+
+  setItemListChecked(event: number) {
+    this.taskList[event].checked = true;
+    this.taskList.sort(
+      (first, last) => Number(first.checked) - Number(last.checked)
+    );
     localStorage.setItem('lista', JSON.stringify(this.taskList));
   }
 }
